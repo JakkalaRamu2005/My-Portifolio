@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import Home from '@/components/Home'
+import EnhancedHome from '@/components/EnhancedHome'
 import About from '@/components/About'
 import { 
   SkillsSection, 
@@ -14,7 +14,7 @@ export default function HomePage() {
       <Navbar />
       
       {/* Page Sections */}
-      <Home />
+      <EnhancedHome />
       <About />
       <SkillsSection />
       <ProjectsSection />
