@@ -63,7 +63,7 @@ export const ContactSection = () => (
           Get In Touch
         </h2>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Ready to collaborate on your next AI automation project? Let's discuss how we can help your business grow with smart technology solutions.
+          Ready to collaborate on exciting projects? Let's connect and discuss how we can create innovative tech solutions together!
         </p>
         
         {/* Contact options */}
@@ -73,7 +73,7 @@ export const ContactSection = () => (
               <span className="text-2xl">📧</span>
             </div>
             <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-            <p className="text-gray-600">ram@example.com</p>
+            <p className="text-gray-600">ramujakkala1@gmail.com</p>
           </div>
           
           <div className="bg-white p-6 rounded-xl shadow-soft hover:shadow-soft-lg transition-all duration-300">
@@ -88,8 +88,8 @@ export const ContactSection = () => (
             <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">🚀</span>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">GoEvolve AAA</h3>
-            <p className="text-gray-600">AI Automation Agency</p>
+            <h3 className="font-semibold text-gray-900 mb-2">GitHub</h3>
+            <p className="text-gray-600">Check out my projects</p>
           </div>
         </div>
         

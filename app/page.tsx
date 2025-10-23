@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Home from '@/components/Home'
+import About from '@/components/About'
 import { 
-  AboutSection, 
   SkillsSection, 
   ProjectsSection, 
   ContactSection 
@@ -15,7 +15,7 @@ export default function HomePage() {
       
       {/* Page Sections */}
       <Home />
-      <AboutSection />
+      <About />
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
@@ -28,7 +28,7 @@ export default function HomePage() {
               © 2024 Ram. Built with Next.js, TypeScript & Tailwind CSS.
             </p>
             <p className="text-sm text-gray-400">
-              Co-founder of GoEvolve AAA | AI Automation Agency
+    
             </p>
           </div>
         </div>

@@ -51,18 +51,18 @@ const Home = () => {
               
               {/* Description */}
               <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
-                I'm a <span className="font-semibold text-gray-800">B.Tech student</span> and{' '}
-                <span className="font-semibold text-primary-600">co-founder of GoEvolve AAA</span>{' '}
-                — an AI Automation Agency helping businesses save time and costs with smart AI tools like{' '}
-                <span className="font-medium">chatbots, voice agents, and image models</span>. 
-                I love building real-world projects that make a difference.
+                I am a passionate <span className="font-semibold text-gray-800">Computer Science student</span> and{' '}
+                <span className="font-semibold text-primary-600">aspiring software developer</span> from{' '}
+                <span className="font-medium">Hyderabad</span>, focused on{' '}
+                <span className="font-medium">AI, web development, and data science</span> to create{' '}
+                innovative tech solutions that solve real-world problems.
               </p>
             </div>
 
             {/* Social links */}
             <div className="flex items-center space-x-6">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/ramu-jakkala/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-soft hover:shadow-soft-lg hover:scale-110 transition-all duration-300 text-primary-600 hover:text-primary-700"
@@ -71,7 +71,7 @@ const Home = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/JakkalaRamu2005"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-soft hover:shadow-soft-lg hover:scale-110 transition-all duration-300 text-gray-700 hover:text-gray-900"
@@ -80,7 +80,7 @@ const Home = () => {
                 <Github className="w-5 h-5" />
               </a>
               <a
-                href="mailto:ram@example.com"
+                href="mailto:ramujakkala1@gmail.com"
                 className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-soft hover:shadow-soft-lg hover:scale-110 transition-all duration-300 text-primary-600 hover:text-primary-700"
                 aria-label="Email Contact"
               >
@@ -115,17 +115,13 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full opacity-10 animate-pulse"></div>
                 <div className="absolute inset-4 bg-gradient-to-br from-primary-300 to-primary-500 rounded-full opacity-20"></div>
                 
-                {/* Main profile image placeholder */}
-                <div className="absolute inset-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center shadow-soft-lg">
-                  <div className="text-center space-y-4">
-                    <div className="w-24 h-24 bg-primary-100 rounded-full mx-auto flex items-center justify-center">
-                      <span className="text-4xl">👨‍💻</span>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-gray-600 font-medium">Profile Image</p>
-                      <p className="text-sm text-gray-500">Coming Soon</p>
-                    </div>
-                  </div>
+                {/* Main profile image */}
+                <div className="absolute inset-8 rounded-full overflow-hidden shadow-soft-lg">
+                  <img
+                    src="https://res.cloudinary.com/dcsglluc4/image/upload/v1760698241/ramu_image_aga861.jpg"
+                    alt="Ram Jakkala - Profile Picture"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
 
                 {/* Floating elements */}

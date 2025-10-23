@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Ram - Portfolio | B.Tech Student & AI Automation Expert',
-  description: 'Portfolio of Ram, B.Tech student and co-founder of GoEvolve AAA - an AI Automation Agency. Specializing in AI tools, chatbots, voice agents, and innovative tech solutions.',
-  keywords: 'Ram, Portfolio, B.Tech, AI Automation, GoEvolve AAA, Chatbots, Voice Agents, Web Development',
-  authors: [{ name: 'Ram' }],
+  title: 'Ram Jakkala - Portfolio | Computer Science Student & Software Developer',
+  description: 'Portfolio of Ram Jakkala, passionate Computer Science student and aspiring software developer from Hyderabad. Focused on AI, web development, and data science to create innovative tech solutions.',
+  keywords: 'Ram Jakkala, Portfolio, Computer Science, Software Developer, AI, Web Development, Data Science, Hyderabad, React, Next.js',
+  authors: [{ name: 'Ram Jakkala' }],
   viewport: 'width=device-width, initial-scale=1',
 }
 
