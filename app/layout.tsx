@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   description: 'Portfolio of Ram Jakkala, passionate Computer Science student and aspiring software developer from Hyderabad. Focused on AI, web development, and data science to create innovative tech solutions.',
   keywords: 'Ram Jakkala, Portfolio, Computer Science, Software Developer, AI, Web Development, Data Science, Hyderabad, React, Next.js',
   authors: [{ name: 'Ram Jakkala' }],
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
