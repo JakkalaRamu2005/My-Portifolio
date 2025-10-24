@@ -1,10 +1,10 @@
 import Navbar from '@/components/Navbar'
 import EnhancedHome from '@/components/EnhancedHome'
 import About from '@/components/About'
+import Skills from '@/components/Skills'
+import Contact from '@/components/Contact'
 import { 
-  SkillsSection, 
-  ProjectsSection, 
-  ContactSection 
+  ProjectsSection 
 } from '@/components/PlaceholderSections'
 
 export default function HomePage() {
@@ -16,9 +16,9 @@ export default function HomePage() {
       {/* Page Sections */}
       <EnhancedHome />
       <About />
-      <SkillsSection />
+      <Skills />
       <ProjectsSection />
-      <ContactSection />
+      <Contact />
       
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8">

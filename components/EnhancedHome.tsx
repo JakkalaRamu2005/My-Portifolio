@@ -54,28 +54,42 @@ const EnhancedHome = () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    // Disable particles on mobile for better performance
+    const isMobile = window.innerWidth < 768
+    if (isMobile) return
+
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    // Initialize particles
+    // Initialize particles (reduced count for better performance)
     const initParticles = () => {
       particlesRef.current = []
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 25; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.5 + 0.2
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 1.5 + 0.5,
+          opacity: Math.random() * 0.4 + 0.1
         })
       }
     }
 
-    const animate = () => {
+    let lastTime = 0
+    const targetFPS = 30 // Limit to 30 FPS for better performance
+    const frameInterval = 1000 / targetFPS
+
+    const animate = (currentTime: number) => {
+      if (currentTime - lastTime < frameInterval) {
+        requestAnimationFrame(animate)
+        return
+      }
+      lastTime = currentTime
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       particlesRef.current.forEach((particle, index) => {
@@ -83,19 +97,23 @@ const EnhancedHome = () => {
         particle.x += particle.vx
         particle.y += particle.vy
 
-        // Mouse interaction
-        const dx = mousePosition.x - particle.x
-        const dy = mousePosition.y - particle.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
-        
-        if (distance < 100) {
-          particle.x -= dx * 0.01
-          particle.y -= dy * 0.01
+        // Simplified mouse interaction (less frequent calculations)
+        if (index % 3 === 0) { // Only calculate for every 3rd particle
+          const dx = mousePosition.x - particle.x
+          const dy = mousePosition.y - particle.y
+          const distanceSquared = dx * dx + dy * dy // Avoid sqrt for performance
+          
+          if (distanceSquared < 10000) { // 100^2
+            particle.x -= dx * 0.005
+            particle.y -= dy * 0.005
+          }
         }
 
-        // Boundary check
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
+        // Boundary check with wrapping instead of bouncing
+        if (particle.x < 0) particle.x = canvas.width
+        if (particle.x > canvas.width) particle.x = 0
+        if (particle.y < 0) particle.y = canvas.height
+        if (particle.y > canvas.height) particle.y = 0
 
         // Draw particle
         ctx.beginPath()
@@ -103,27 +121,31 @@ const EnhancedHome = () => {
         ctx.fillStyle = `rgba(59, 130, 246, ${particle.opacity})`
         ctx.fill()
 
-        // Connect nearby particles
-        particlesRef.current.slice(index + 1).forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x
-          const dy = particle.y - otherParticle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          
-          if (distance < 100) {
-            ctx.beginPath()
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(otherParticle.x, otherParticle.y)
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 100)})`
-            ctx.stroke()
+        // Simplified connection lines (only for nearby particles, less frequent)
+        if (index % 2 === 0) { // Only draw connections for every other particle
+          for (let i = index + 1; i < Math.min(index + 3, particlesRef.current.length); i++) {
+            const otherParticle = particlesRef.current[i]
+            const dx = particle.x - otherParticle.x
+            const dy = particle.y - otherParticle.y
+            const distanceSquared = dx * dx + dy * dy
+            
+            if (distanceSquared < 6400) { // 80^2 - reduced connection distance
+              const distance = Math.sqrt(distanceSquared)
+              ctx.beginPath()
+              ctx.moveTo(particle.x, particle.y)
+              ctx.lineTo(otherParticle.x, otherParticle.y)
+              ctx.strokeStyle = `rgba(59, 130, 246, ${0.05 * (1 - distance / 80)})`
+              ctx.stroke()
+            }
           }
-        })
+        }
       })
       
       requestAnimationFrame(animate)
     }
 
     initParticles()
-    animate()
+    animate(0)
 
     const handleResize = () => {
       canvas.width = window.innerWidth
@@ -188,10 +210,38 @@ const EnhancedHome = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Mobile-first layout: Profile picture first on mobile, side by side on desktop */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left side - Enhanced text content */}
-          <div className="space-y-8">
+          {/* Profile section - appears first on mobile, right side on desktop */}
+          <div
+            className={`flex justify-center lg:justify-end order-1 lg:order-2 transition-all duration-1000 delay-300 ${
+              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+            }`}
+          >
+            <div className="relative">
+              {/* Enhanced profile image container */}
+              <div className="relative w-80 h-80 sm:w-96 sm:h-96 lg:w-[420px] lg:h-[420px]">
+                {/* Animated background rings */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 animate-spin-slow"></div>
+                <div className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-400/15 to-pink-400/15 animate-spin-reverse"></div>
+                <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-300/10 to-indigo-300/10 animate-pulse"></div>
+                
+                {/* Profile image with enhanced styling */}
+                <div className="absolute inset-8 rounded-full overflow-hidden shadow-2xl ring-4 ring-white">
+                  <img
+                    src="https://res.cloudinary.com/dcsglluc4/image/upload/v1760698241/ramu_image_aga861.jpg"
+                    alt="Ram Jakkala - Profile Picture"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Text content - appears second on mobile, left side on desktop */}
+          <div className="space-y-8 order-2 lg:order-1">
             {/* Animated greeting */}
             <div
               className={`transition-all duration-1000 ${
@@ -234,25 +284,6 @@ const EnhancedHome = () => {
               </p>
             </div>
 
-            {/* Enhanced stats */}
-            <div
-              className={`grid grid-cols-3 gap-6 py-6 transition-all duration-1000 delay-400 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-            >
-              <div className="text-center group cursor-pointer">
-                <div className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">15+</div>
-                <div className="text-sm text-gray-600">Projects</div>
-              </div>
-              <div className="text-center group cursor-pointer">
-                <div className="text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">3+</div>
-                <div className="text-sm text-gray-600">Tech Stacks</div>
-              </div>
-              <div className="text-center group cursor-pointer">
-                <div className="text-2xl font-bold text-gray-900 group-hover:text-green-600 transition-colors">100%</div>
-                <div className="text-sm text-gray-600">Dedication</div>
-              </div>
-            </div>
 
             {/* Enhanced social links with tooltips */}
             <div
@@ -325,43 +356,6 @@ const EnhancedHome = () => {
             </div>
           </div>
 
-          {/* Right side - Enhanced profile section */}
-          <div
-            className={`flex justify-center lg:justify-end transition-all duration-1000 delay-300 ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-            }`}
-          >
-            <div className="relative">
-              {/* Enhanced profile image container */}
-              <div className="relative w-80 h-80 sm:w-96 sm:h-96 lg:w-[420px] lg:h-[420px]">
-                {/* Animated background rings */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 animate-spin-slow"></div>
-                <div className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-400/15 to-pink-400/15 animate-spin-reverse"></div>
-                <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-300/10 to-indigo-300/10 animate-pulse"></div>
-                
-                {/* Profile image with enhanced styling */}
-                <div className="absolute inset-8 rounded-full overflow-hidden shadow-2xl ring-4 ring-white">
-                  <img
-                    src="https://res.cloudinary.com/dcsglluc4/image/upload/v1760698241/ramu_image_aga861.jpg"
-                    alt="Ram Jakkala - Profile Picture"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent"></div>
-                </div>
-
-                {/* Enhanced floating elements */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-xl animate-float">
-                  <span className="text-2xl">🚀</span>
-                </div>
-                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center text-white shadow-xl animate-float-delayed">
-                  <span className="text-xl">⚡</span>
-                </div>
-                <div className="absolute top-1/4 -left-8 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white shadow-lg animate-bounce">
-                  <Star className="w-5 h-5" />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Enhanced scroll indicator */}
