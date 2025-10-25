@@ -263,7 +263,7 @@ const EnhancedHome = () => {
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="block text-gray-900">Hi, I'm</span>
                 <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                  Ram Jakkala
+                  Ramu Jakkala
                 </span>
                 <span className="inline-block animate-wave text-4xl ml-2">👋</span>
               </h1>

@@ -211,7 +211,7 @@ const Contact = () => {
           <div className="flex items-center justify-center mt-4 space-x-2">
             <span className="text-gray-500">Made with</span>
             <Heart className="w-4 h-4 text-red-500" />
-            <span className="text-gray-500">by Ram Jakkala</span>
+            <span className="text-gray-500">by Ramu Jakkala</span>
           </div>
         </div>
       </div>
